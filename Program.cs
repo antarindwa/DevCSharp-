@@ -4,45 +4,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TirageLoto
+namespace PlusMoins
 {
     class Program
     {
-        /// <summary>
-        ///  Tirage de 7 chiffres aléatoires
-        /// </summary>
-        /// <param name="args"></param>
         static void Main(string[] args)
         {
-
-            Console.WriteLine(" ***************** Bienvenu dans jeu de tirage Loto ************** \n \n");
-            Console.WriteLine("***** Les 7 chiffres tirés sont les suivants *** :\n");
-            int[] SevenPulledNumber = new int[7];
-            // SevenPulledNumber[0] = PulledNumber;
-            for (int i = 0; i < SevenPulledNumber.Length; i++)
+            System.Random rand = new System.Random();
+            int Intrandom = rand.Next(1, 100);
+            Console.WriteLine("Let's start");
+            int NumberChoosen = 0;
+            Console.WriteLine("Guess the fired number");
+            bool Over = false;
+            int i = 0;
+            do
             {
-                Random rand = new Random();
-                int PulledNumber = rand.Next(1, 50);
-                if (!SevenPulledNumber.Contains(PulledNumber))
+                i++; 
+                string ChooseNumber = Console.ReadLine();
+                if (int.TryParse(ChooseNumber, out NumberChoosen))
                 {
-                    SevenPulledNumber[i] = PulledNumber;
+                    if (NumberChoosen < Intrandom)
+                    {
+                        Console.WriteLine("You are too low");
+                        Console.WriteLine("Please choose another one");
+                    }
+                    else if (NumberChoosen > Intrandom && NumberChoosen <100)
+                    {
+                        Console.WriteLine("You are too High");
+                        Console.WriteLine("Please choose another one");
+                    }
+                    else if (NumberChoosen == Intrandom)
+                    {
+                        Console.WriteLine("Congraturations, you win !!, You used {0} times to get the good result", i);
+                        Over = true;
+                    }
+
+                    else if (NumberChoosen >= 100)
+                    {
+                        Console.WriteLine("Please enter the number between 1 and 100");
+                    }
                 }
                 else
                 {
-                    //PulledNumber = rand.Next(1, 50);
-                    i--;
+                    Console.WriteLine("Please enter the number between 1 and 100");
                 }
-            }
-            AfficherTableau(SevenPulledNumber);
+            } while (!Over);
             Console.ReadLine();
         }
-        static void AfficherTableau(int[] tab)
 
-        {
-            for (int i = 0; i < tab.Length; i++)
-            {
-                Console.WriteLine(tab[i]);
-            }
-        }
     }
 }
